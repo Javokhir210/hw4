@@ -2,25 +2,26 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as pth;
 
 class DBHelper {
-  static Database? _db;
+  static Database? dataBase;
 
   Future<Database> get db async {
-    if (_db != null) {
-      return _db!;
+    if (dataBase != null) {
+      return dataBase!;
     }
-    _db = await initDatabase();
-    return _db!;
+    dataBase = await initDatabase();
+    return dataBase!;
   }
 
   Future<Database> initDatabase() async {
     var databasesPath = await getDatabasesPath();
-    String path = pth.join(databasesPath, 'your_database_name.db');
-    var db = await openDatabase(path, version: 1, onCreate: _onCreate);
+    String path = pth.join(databasesPath, 'temporary_db.db');
+    var db = await openDatabase(path, version: 1, onCreate: Create);
     return db;
   }
 
-  void _onCreate(Database db, int version) async {
-    await db.execute('CREATE TABLE your_table_name (id INTEGER PRIMARY KEY, name TEXT)');
+  void Create(Database db, int version) async {
+    await db.execute(
+        'CREATE TABLE temporary_db (id INTEGER PRIMARY KEY, name TEXT)');
   }
 
   Future<int> saveUser(User user) async {
@@ -30,11 +31,9 @@ class DBHelper {
 
   Future<List<User>> getUsers() async {
     var dbClient = await db;
-    var result = await dbClient.query('your_table_name');
+    var result = await dbClient.query('temporary_db');
     return result.map((e) => User.fromMap(e)).toList();
   }
-
-// Other methods for CRUD operations
 }
 
 class User {

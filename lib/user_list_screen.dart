@@ -7,10 +7,10 @@ class UserListScreen extends StatefulWidget {
   const UserListScreen({Key? key}) : super(key: key);
 
   @override
-  _UserListScreenState createState() => _UserListScreenState();
+  UserListScreenState createState() => UserListScreenState();
 }
 
-class _UserListScreenState extends State<UserListScreen> {
+class UserListScreenState extends State<UserListScreen> {
   List<Map<String, dynamic>> userList = [];
   DBHelper dbHelper = DBHelper();
 
@@ -31,11 +31,9 @@ class _UserListScreenState extends State<UserListScreen> {
   }
 
   Future<void> storeDataInSQLite(Map<String, dynamic> userData) async {
-    // Store the selected data in SQLite
     await dbHelper.saveUser(User(
       null,
       userData['name'] ?? '',
-      // Add more fields as needed
     ));
   }
 
@@ -47,9 +45,6 @@ class _UserListScreenState extends State<UserListScreen> {
       ),
       body: Column(
         children: [
-          // Display user information as a list
-          // TODO: Implement your user list UI here
-          // For example:
           ListView.builder(
             shrinkWrap: true,
             itemCount: userList.length,
@@ -60,7 +55,6 @@ class _UserListScreenState extends State<UserListScreen> {
                 trailing: IconButton(
                   icon: const Icon(Icons.add),
                   onPressed: () {
-                    // Store selected data in SQLite
                     storeDataInSQLite(userList[index]);
                   },
                 ),
@@ -68,17 +62,15 @@ class _UserListScreenState extends State<UserListScreen> {
             },
           ),
 
-          // Buttons to get more users and store data in SQLite
           ElevatedButton(
             onPressed: () {
-              // Fetch more users from the API
               fetchUsers();
             },
             child: const Text('Get More Users'),
           ),
           ElevatedButton(
             onPressed: () {
-              // TODO: Store selected data in SQLite
+              storeDataInSQLite(userList as Map<String, dynamic>);
             },
             child: const Text('Store Data in SQLite'),
           ),

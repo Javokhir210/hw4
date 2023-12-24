@@ -5,10 +5,10 @@ class LocalUserListScreen extends StatefulWidget {
   const LocalUserListScreen({Key? key}) : super(key: key);
 
   @override
-  _LocalUserListScreenState createState() => _LocalUserListScreenState();
+  LocalUserListScreenState createState() => LocalUserListScreenState();
 }
 
-class _LocalUserListScreenState extends State<LocalUserListScreen> {
+class LocalUserListScreenState extends State<LocalUserListScreen> {
   List<Map<String, dynamic>> localUserList = [];
 
   @override
@@ -20,8 +20,8 @@ class _LocalUserListScreenState extends State<LocalUserListScreen> {
   Future<void> _fetchLocalUserList() async {
     DBHelper dbHelper = DBHelper();
 
-    // Query all users from the database
-    List<Map<String, dynamic>> users = (await dbHelper.getUsers()).cast<Map<String, dynamic>>();
+    List<Map<String, dynamic>> users =
+        (await dbHelper.getUsers()).cast<Map<String, dynamic>>();
 
     setState(() {
       localUserList = users;
@@ -36,16 +36,12 @@ class _LocalUserListScreenState extends State<LocalUserListScreen> {
       ),
       body: Column(
         children: [
-          // Display local user information as a list
-          // TODO: Implement your local user list UI here
-          // For example:
           ListView.builder(
             shrinkWrap: true,
             itemCount: localUserList.length,
             itemBuilder: (context, index) {
               return ListTile(
                 title: Text(localUserList[index]['name'] ?? ''),
-                // Add more fields as needed
               );
             },
           ),
