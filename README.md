@@ -1,6 +1,7 @@
 # hw4
-
 A new Flutter project.
+
+I have created 3 screens as we are asked. I have added a function to check whether the app is running for the first time or not. If is it in the opening screen a widget is run once, then function value is changed so that app knows it is not the first launch. In the second screen I am getting info from user  (name) and storing it in database. In the next page I am getting the info from the database and displaying it.
 
 ## Getting Started
 
